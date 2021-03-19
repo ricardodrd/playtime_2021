@@ -37,6 +37,16 @@ def get_rt_data_yahoo(stock, step):
         print(scrap_data_yahoo(url))
         sleep(step)
 
+def get_both_real_data(symbol, isin, step):
+    url_yahoo = f'https://finance.yahoo.com/quote/{symbol}?p={symbol}&.tsrc=fin-srch'
+    url_euronext = f'https://live.euronext.com/en/product/equities/{isin}-MERK/market-information'
+    while True:
+        print(scrap_data_yahoo(url_yahoo))
+        sleep(step/2)
+        print(scrap_data_euronext(url_euronext))
+        sleep(step/2)
+
+
 def get_rt_data_euronext(isin_code, step):
     url = f'https://live.euronext.com/en/product/equities/NO0010776990-MERK/market-information'
     while True:
@@ -46,6 +56,8 @@ def get_rt_data_euronext(isin_code, step):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("symbol", help="symbol letters of the company", type=str)
+    parser.add_argument("isin", help="isin code of the company", type=str)
     parser.add_argument("-s", "--step", help="symbol letters of the company", type=int, default=20)
     args = parser.parse_args()
-    get_rt_data_euronext(args.symbol, args.step)
+    # get_rt_data_euronext(args.symbol, args.step)
+    get_both_real_data(args.symbol, args.isin, args.step)    
