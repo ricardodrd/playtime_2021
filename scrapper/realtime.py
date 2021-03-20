@@ -2,8 +2,10 @@ import requests
 import argparse
 from time import sleep
 from bs4 import BeautifulSoup
+import datetime
 from selenium import webdriver
 import serial
+import pandas as pd
 
 # CODES = {"yahoo": '', "euronext": 'NO0010776990'}
 
@@ -31,13 +33,21 @@ def scrap_data_yahoo(url):
     price = soup.find_all('span')[0].text
     change = soup.find_all('span')[1].text
     bid_change = change.split(' ')[0]
-    return price
+    return price, bid_change
 
 def get_rt_data_yahoo(stock, step):
     # step is the number of seconds to wait between calls
     url = f'https://finance.yahoo.com/quote/{stock}?p={stock}&.tsrc=fin-srch'
+    csv_limit = 1000
+    # chance since previous close
+    df = pd.DataFrame(columns=["timestamp", "price", "change_pc"])
     while True:
-        print(scrap_data_yahoo(url)[1])
+        price, change = scrap_data_yahoo(url)
+        timestamp = datetime.datetime.now()
+        timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        # print(f'{timestamp}: {price}')
+        df = df.append({'timestamp': timestamp, 'price': price, 'change_pc': change}, ignore_index=True)
+        df.to_csv(f'./realtime_data_{stock}.csv', index=False)
         sleep(step)
 
 def get_both_real_data(symbol, isin, step):
@@ -126,10 +136,10 @@ def get_rt_data_euronext(isin_code, step):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("symbol", help="symbol letters of the company", type=str)
-    parser.add_argument("isin", help="isin code of the company", type=str)
+    # parser.add_argument("isin", help="isin code of the company", type=str)
     parser.add_argument("-s", "--step", help="symbol letters of the company", type=int, default=20)
     args = parser.parse_args()
     # get_rt_data_euronext(args.symbol, args.step)
-    get_both_real_data(args.symbol, args.isin, args.step)
+    # get_both_real_data(args.symbol, args.isin, args.step)
     # scrap_google(args.symbol)
-    # get_rt_data_yahoo(args.symbol, args.step)
+    get_rt_data_yahoo(args.symbol, args.step)

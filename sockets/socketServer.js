@@ -5,7 +5,7 @@ const SerialPort = require("serialport");
 // App setup
 const PORT = 5000;
 
-const port = new SerialPort("/dev/ttyACM0", {
+const port = new SerialPort("/dev/ttyACM1", {
   baudRate: 9600,
 });
 
@@ -67,34 +67,6 @@ function evaluate_detections_duck(bbox){
   if (index < 0){
     index ++;
   }
-  // if(idx == 0){
-  //   //Using midpoints to compare postions
-  //   initial_detecion = bbox.x + (bbox.width/2);
-  // }
-  //Rate of when the detections are evaluated
-
-  // if (idx == 4){
-  //   let final_detection = bbox.x + (bbox.width/2);
-  //   let difference = final_detection - initial_detecion;
-  //   if (Math.abs(difference) > 0.15){
-  //     let rotation = calculate_rotation(difference)
-  //     console.log(rotation)
-  //     if (difference > 0){     
-  //       console.log("LEFT");
-  //       port.write(rotation.toString())
-  //     }
-  //     else{
-  //       console.log("RIGHT");
-  //       port.write(rotation.toString())
-  //     }
-  //     console.log("waiting for the camera to move");
-  //     idx = -6;
-  //   }
-  //   else {
-  //     console.log("You did not move! WTF??!")
-  //     idx = 0;
-  //   }
-  // }
 }
 
 io.listen(PORT);

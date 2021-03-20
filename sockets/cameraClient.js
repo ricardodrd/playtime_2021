@@ -30,7 +30,7 @@ sdk.init();
 sdk.on('ATTACH', async (cameraManager) => {
   camManager = cameraManager;
   const detectorOps = {
-    objectFilter: ['person'],
+    objectFilter: ['head'],
     DOWS: true,
   };
   const detector = await cameraManager.getDetector(detectorOps);
