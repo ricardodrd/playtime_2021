@@ -7,7 +7,7 @@ def main():
 
     alarm = False
     ser = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=.1)
-
+ #
     for idx in range(0,len(current_prices)):
         print("current:",current_prices[idx],", last:",last_prices[idx])
         if ((current_prices[idx] > last_prices[idx]) and alarm):
