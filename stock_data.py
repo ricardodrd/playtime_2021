@@ -32,13 +32,13 @@ def main(stock):
     end_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     stock_df = web.DataReader(stock, 'yahoo', start_date, end_date)
     stock_rows = stock_df.shape[0]
-
+#
     # start_date_second_stock = datetime.datetime(2000, 1,1)
     # second_stock_df = web.DataReader('PEXIP.OL', 'yahoo', start_date, end_date)
     # second_stock_reduced_df = second_stock_df[]
     plot_cols(stock_df, ['Open', 'Close'])
     # plot_cols(stock_df, ['Volume'])
-
+#
 def plot_cols(df, cols):
     for col in cols:
         df[col].plot(label=col)
