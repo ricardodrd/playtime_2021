@@ -7,7 +7,7 @@ plt.style.use('seaborn')
 fig = plt.figure()
 ax = fig.add_subplot(1,1,1)
 path = 'realtime_data_GME.csv'
-
+#
 def plot_realtime(i):
     df_stock = pd.read_csv(path)
     print(df_stock[0:i])
