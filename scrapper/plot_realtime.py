@@ -15,7 +15,7 @@ def plot_realtime(i):
     y = df_stock[0:i]['price']
     ax.clear()
     ax.plot(x, y)
-
+#
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("csv_path", help="path to csv", type=str)
