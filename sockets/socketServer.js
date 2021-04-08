@@ -8,7 +8,7 @@ const PORT = 5000;
 const port = new SerialPort("/dev/ttyACM0", {
   baudRate: 9600,
 });
-
+//
 io.on("connection", function (socket) {
   socket.on("detections", function (detections) {
     io.sockets.emit("detections", detections)
