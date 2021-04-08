@@ -7,6 +7,10 @@ from datetime import datetime
 
 nse = Nse()
 
+
+
+
+
 while True:
     q = nse.get_quote('infy')
     now = datetime.now().strftime("%H:%M:%S")
