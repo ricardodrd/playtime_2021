@@ -6,7 +6,7 @@ import argparse
 plt.style.use('seaborn')
 fig = plt.figure()
 ax = fig.add_subplot(1,1,1)
-path = 'realtime_data_TSLA.csv'
+path = 'realtime_data_GME.csv'
 
 def plot_realtime(i):
     df_stock = pd.read_csv(path)

@@ -5,7 +5,7 @@ const SerialPort = require("serialport");
 // App setup
 const PORT = 5000;
 
-const port = new SerialPort("/dev/ttyACM1", {
+const port = new SerialPort("/dev/ttyACM0", {
   baudRate: 9600,
 });
 
@@ -13,8 +13,8 @@ io.on("connection", function (socket) {
   socket.on("detections", function (detections) {
     io.sockets.emit("detections", detections)
     if (detections[0]) {
-      // evaluate_detections_duck(detections[0].bbox)
-      evaluate_position(detections[0].bbox);
+      evaluate_detections_duck(detections[0].bbox)
+      // evaluate_position(detections[0].bbox);
     }
     else{
       console.log("no detections")
@@ -24,7 +24,6 @@ io.on("connection", function (socket) {
 
 let index = 0;
 function evaluate_position(bbox){
-  console.log(index)
   if (index == 0){
     if((bbox.x + bbox.width) > 0.9 || (bbox.x < 0.1)) {
       console.log("ROTATE!")
@@ -56,11 +55,12 @@ function evaluate_detections_duck(bbox){
   console.log(idx);
   if (index == 0){
     difference = (bbox.x + (bbox.width/2)) - duck_position
-    if(Math.abs(difference) > 0.2) {
+    if(Math.abs(difference) > 0.15) {
       console.log("ROTATE!")
       let rotation = calculate_rotation(difference);
       port.write(rotation.toString())
-      index = -7
+      duck_position = duck_position + difference 
+      index = -3
     }
   }
   //wait for the camera to move
